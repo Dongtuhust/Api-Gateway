@@ -5,6 +5,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+
+import java.util.Date;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.http.HttpStatus;
 //import org.springframework.http.ResponseEntity;
@@ -45,16 +49,25 @@ public class ProductController {
        Product film = productService.findOne(id);
         return film;
     }
-
-    @ApiOperation(value = "Update a film")
+    
+    @ApiOperation(value = "Add a product")
+    @RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json")
+    public void saveProduct(@RequestBody Product product){
+        productService.save(product);
+    }
+    
+    @ApiOperation(value = "Update a product")
     @RequestMapping(value = "/update/{id}", method = RequestMethod.PUT, produces = "application/json")
     public void updateProduct(@PathVariable Integer id, @RequestBody Product product){
         Product storedProduct = productService.findOne(id);
         storedProduct.setSku(product.getSku());
         storedProduct.setTitle(product.getTitle());
         storedProduct.setCategory(product.getCategory());
-        storedProduct.setModijedAt(product.getModijedAt());
+        Date today=new Date(System.currentTimeMillis());
+        storedProduct.setModijedAt(today);
         storedProduct.setPrice(product.getPrice());
+        storedProduct.setAttibute(product.getAttibute());
+        storedProduct.setBrand(product.getBrand());
         productService.save(storedProduct);
     }
 
@@ -62,7 +75,6 @@ public class ProductController {
     @RequestMapping(value="/delete/{id}", method = RequestMethod.DELETE, produces = "application/json")
     public void delete(@PathVariable Integer id){
         productService.delete(id);
-
     }
 	
 }

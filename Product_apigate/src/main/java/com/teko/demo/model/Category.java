@@ -1,4 +1,6 @@
 package com.teko.demo.model;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,7 +12,7 @@ import javax.persistence.Table;
 @Table(name="category")
 public class Category {
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
 	private Integer id;
 	
@@ -21,9 +23,9 @@ public class Category {
    	private String createAt;
     
     @Column(name="modifiedAt")
-   	private String modijedAt;
+   	private Date modijedAt;
    	public Category() {}
-    public Category(Integer id, String name, String createAt, String modijedAt) {
+    public Category(Integer id, String name, String createAt, Date modijedAt) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -55,11 +57,11 @@ public class Category {
 		this.createAt = createAt;
 	}
 
-	public String getModijedAt() {
+	public Date getModijedAt() {
 		return modijedAt;
 	}
 
-	public void setModijedAt(String modijedAt) {
-		this.modijedAt = modijedAt;
+	public void setModijedAt(Date today) {
+		this.modijedAt = today;
 	}
 }

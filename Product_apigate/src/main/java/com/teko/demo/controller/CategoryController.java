@@ -1,5 +1,5 @@
 package com.teko.demo.controller;
-
+import java.util.Date;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -41,17 +41,24 @@ public class CategoryController {
     @ApiOperation(value = "Search a Category with an ID",response = Category.class)
     @RequestMapping(value = "category/{id}", method= RequestMethod.GET, produces = "application/json")
     public Category showCategory(@PathVariable Integer id, Model model){
-       Category film = categoryService.findOne(id);
-        return film;
+       Category category = categoryService.findOne(id);
+        return category;
     }
-
+    
+    @ApiOperation(value = "Add a category")
+    @RequestMapping(value = "/category/add", method = RequestMethod.POST, produces = "application/json")
+    public void saveCategory (@RequestBody Category category){
+        categoryService.save(category);
+    }
+    
     @ApiOperation(value = "Update a category")
     @RequestMapping(value = "/category/update/{id}", method = RequestMethod.PUT, produces = "application/json")
     public void updateCategory(@PathVariable Integer id, @RequestBody Category Category){
         Category storedCategory = categoryService.findOne(id);
         storedCategory.setName(Category.getName());
-        storedCategory.setCreateAt(Category.getCreateAt());
-        storedCategory.setModijedAt(Category.getModijedAt());
+//        storedCategory.setCreateAt(Category.getCreateAt());
+        Date today=new Date(System.currentTimeMillis());
+        storedCategory.setModijedAt(today);
         categoryService.save(storedCategory);
     }
 

@@ -5,7 +5,6 @@ import com.teko.demo.model.Category;
 public interface CategoryService {
 	Iterable<Category> findAll();
 
-
 	Category findOne(Integer id);
 
 	void save(Category contact);
