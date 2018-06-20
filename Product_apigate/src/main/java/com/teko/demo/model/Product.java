@@ -1,17 +1,25 @@
 package com.teko.demo.model;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.MapKeyColumn;
 import javax.persistence.Table;
+
+import com.teko.demo.config.MapToStringConverter;
 
 
 @Entity
-@Table(name="product")
+@Table(name="products")
 public class Product {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,20 +39,27 @@ public class Product {
 	private String category;
 	
     @Column(name="CreatedAt")
-	private String createAt;
+	private Date createAt;
 	
     @Column(name="modifiedAt")
 	private Date modijedAt;
     
+//    @ElementCollection
+//    @CollectionTable(name="ATTRIBUTE")
+//    @MapKeyColumn(name="attbute")
+
     @Column(name="Attbute")
-	private String attibute;
+    @Convert(converter = MapToStringConverter.class)
+	private Map<String,String> attibute = new HashMap<>();
 	
     @Column(name="Brand")
 	private String brand;
     
-    public Product() {};
+    public Product() {
+    	this.createAt = new Date(System.currentTimeMillis());
+    };
     public Product(String sku, String title, int price, String category, Date modijedAt,
-			String attibute, String brand) {
+    		 Date createAt,Map<String,String> attibute, String brand) {
 		super();
 		this.sku = sku;
 		this.title = title;
@@ -53,11 +68,14 @@ public class Product {
 		this.modijedAt = modijedAt;
 		this.attibute = attibute;
 		this.brand = brand;
+		this.createAt = createAt;
 	}
-	public String getAttibute() {
+    
+    
+	public Map<String,String> getAttibute() {
 		return attibute;
 	}
-	public void setAttibute(String attibute) {
+	public void setAttibute(Map<String,String> attibute) {
 		this.attibute = attibute;
 	}
 	public String getBrand() {
@@ -96,10 +114,10 @@ public class Product {
 	public void setCategory(String category) {
 		this.category = category;
 	}
-	public String getCreateAt() {
+	public Date getCreateAt() {
 		return createAt;
 	}
-	public void setCreateAt(String createAt) {
+	public void setCreateAt(Date createAt) {
 		this.createAt = createAt;
 	}
 	public Date getModijedAt() {

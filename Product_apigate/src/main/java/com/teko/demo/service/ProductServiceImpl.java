@@ -1,6 +1,11 @@
 package com.teko.demo.service;
 
+import java.awt.print.Pageable;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.teko.demo.model.Product;
@@ -11,22 +16,24 @@ public class ProductServiceImpl implements ProductService{
 	@Autowired
     private ProductRepository productRepository;
 	
+//	@Override
+//	public Iterable<Product> findAll() {
+//		// TODO Auto-generated method stub
+//		return productRepository.findAll();
+//	}
+	
+	
+	@SuppressWarnings("deprecation")
 	@Override
-	public Iterable<Product> findAll() {
+	public Page<Product> listAllByPage(PageRequest pageRequest,int page, int size) {
 		// TODO Auto-generated method stub
-		return productRepository.findAll();
+		return productRepository.findAll(new PageRequest(page, size));
 	}
 
-//	@Override
-//	public List<Product> search(String q) {
-//		// TODO Auto-generated method stub
-//		return productRepository.findByNameContaining(q);
-//	}
-
 	@Override
-	public Product findOne(Integer id) {
-		// TODO Auto-generated method stub
-		return productRepository.getOne(id);
+	public Optional<Product> findOne(Integer id) {
+
+		return productRepository.findById(id);
 	}
 
 	@Override
@@ -41,5 +48,10 @@ public class ProductServiceImpl implements ProductService{
 		productRepository.deleteById(id);
 		
 	}
+
+
+
+
+
 	
 }

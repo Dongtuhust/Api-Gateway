@@ -9,23 +9,23 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="category")
+@Table(name="categorys")
 public class Category {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
+    @Column(name="Id")
 	private Integer id;
 	
-    @Column(name="name")
+    @Column(name="Category")
 	private String name;
     
     @Column(name="createdAt")
-   	private String createAt;
+   	private Date createAt;
     
     @Column(name="modifiedAt")
    	private Date modijedAt;
    	public Category() {}
-    public Category(Integer id, String name, String createAt, Date modijedAt) {
+    public Category(Integer id, String name, Date createAt, Date modijedAt) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -49,11 +49,11 @@ public class Category {
 		this.name = name;
 	}
 
-	public String getCreateAt() {
+	public Date getCreateAt() {
 		return createAt;
 	}
 
-	public void setCreateAt(String createAt) {
+	public void setCreateAt(Date createAt) {
 		this.createAt = createAt;
 	}
 

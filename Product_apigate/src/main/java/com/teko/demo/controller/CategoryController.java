@@ -19,6 +19,7 @@ import com.teko.demo.model.Category;
 import com.teko.demo.service.CategoryService;
 
 @RestController
+@RequestMapping(value = "/category")
 @Api(value="Category")
 public class CategoryController {
 	@Autowired
@@ -32,41 +33,40 @@ public class CategoryController {
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
     }
     )
-	@RequestMapping(value = "/category", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(method = RequestMethod.GET, produces = "application/json")
     public Iterable<Category> list(Model model){
         Iterable<Category> CategoryList = categoryService.findAll();
         return CategoryList;
     }
     
     @ApiOperation(value = "Search a Category with an ID",response = Category.class)
-    @RequestMapping(value = "category/{id}", method= RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/{id}", method= RequestMethod.GET, produces = "application/json")
     public Category showCategory(@PathVariable Integer id, Model model){
        Category category = categoryService.findOne(id);
         return category;
     }
     
     @ApiOperation(value = "Add a category")
-    @RequestMapping(value = "/category/add", method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(method = RequestMethod.POST, produces = "application/json")
     public void saveCategory (@RequestBody Category category){
         categoryService.save(category);
     }
     
     @ApiOperation(value = "Update a category")
-    @RequestMapping(value = "/category/update/{id}", method = RequestMethod.PUT, produces = "application/json")
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT, produces = "application/json")
     public void updateCategory(@PathVariable Integer id, @RequestBody Category Category){
         Category storedCategory = categoryService.findOne(id);
         storedCategory.setName(Category.getName());
-//        storedCategory.setCreateAt(Category.getCreateAt());
         Date today=new Date(System.currentTimeMillis());
         storedCategory.setModijedAt(today);
+        storedCategory.setCreateAt(today);
         categoryService.save(storedCategory);
     }
 
     @ApiOperation(value = "Delete a Category")
-    @RequestMapping(value="/category/delete/{id}", method = RequestMethod.DELETE, produces = "application/json")
+    @RequestMapping(value="/{id}", method = RequestMethod.DELETE, produces = "application/json")
     public void delete(@PathVariable Integer id){
         categoryService.delete(id);
-
     }
 	
 }

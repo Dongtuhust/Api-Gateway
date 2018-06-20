@@ -3,8 +3,8 @@ package com.teko.demo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+//import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
-import com.github.javafaker.Faker;
 import com.teko.demo.model.Product;
 import com.teko.demo.service.ProductService;
 import com.teko.demo.service.ProductServiceImpl;
@@ -12,6 +12,7 @@ import com.teko.demo.service.ProductServiceImpl;
 import java.util.Date;
 import java.util.Random;
 @SpringBootApplication
+//@EnableDiscoveryClient
 public class ProductApigateApplication {
 
 	public static void main(String[] args) {
